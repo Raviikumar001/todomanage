@@ -1,0 +1,9 @@
+PORT = 5000
+# These env variables are for conection to postgres database from neon.tech.
+You can use this as example, but they are going to be deleted in the next 8 days.
+
+PGHOST='ep-spring-unit-a16a77n9.ap-southeast-1.aws.neon.tech'
+PGDATABASE='neondb'
+PGUSER='Raviikumar001'
+PGPASSWORD='jIR3uB9iwTPc'
+ENDPOINT_ID='ep-spring-unit-a16a77n9'
