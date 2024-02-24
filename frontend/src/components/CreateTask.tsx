@@ -35,7 +35,7 @@ const CreateTask:React.FC = () => {
                 title,
                 description
             })
-            console.log(response)
+       
             if(response)
             {
                 dispatch(createTaskSuccess(response.data.message))

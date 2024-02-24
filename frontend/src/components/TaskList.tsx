@@ -20,10 +20,10 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
    try {
     const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/delete-task?id=${id}`);
 
-    console.log(response);
+
     if(response.data){
       dispatch(deleteTask(id));
-      console.log(response.data.message)
+     
       toast.success(response.data.message);
     }
    } catch (error:unknown) {
@@ -43,7 +43,7 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
           "completed":!status
         });
 
-    console.log(respone);
+   
     if(respone){
       const payload: updatePayload = {
         id: id,

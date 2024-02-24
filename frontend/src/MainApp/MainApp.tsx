@@ -16,14 +16,14 @@ const MainApp: React.FC = () => {
     dispatch(fetchTasksStart());
     try {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/get-tasks`);
-      console.log(response);
+     
       if(response)
-      {   console.log(response.data )
+      {   
           dispatch(fetchTasksSuccess(response.data))
       }
     } catch (error:unknown) {
       const err = error as AxiosError<string>;
-      console.log(err)
+   
       if(err.response)
       {
         toast.error(err.response.data)
