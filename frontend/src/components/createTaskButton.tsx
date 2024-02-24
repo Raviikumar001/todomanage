@@ -5,7 +5,7 @@ const CreateTaskButton:React.FC = () => {
     <div className='p-4 border border-white  rounded-full text-center bg-[#6b4fbb] sticky-bottom' title='New Task'>
         {/* <p className='font-semibold'><Link to="/app/create-task">Create a new task  </Link></p> */}
 
-        <Link to="/app/create-task"> <img src="feather-pen.png" alt="new note" height={40} width={40}  />  </Link>
+        <Link to="/app/create-task"> <img src="/feather-pen.png" alt="new note" height={40} width={40}  />  </Link>
        
     </div>
   )
