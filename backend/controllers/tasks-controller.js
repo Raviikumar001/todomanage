@@ -20,17 +20,17 @@ const AddNewTask = async (req, res) => {
     try {
         const { title, description } = req.body; 
         
-        const client = await pool.connect(); // Get a client connection
-        try { // Add a nested try/finally to release the client
+        const client = await pool.connect(); 
+        try { 
             const result = await client.query(
                 'INSERT INTO tasks (title, description, completed) VALUES ($1, $2, $3) RETURNING *',
-                [title, description, false] // Default completed status is false
+                [title, description, false] 
               );
               const newTask = result.rows[0];
               res.status(200).json({Task:newTask, message:"Task Created Successfully"});
                 
         } finally {
-          client.release(); // Release the client back to the pool
+          client.release();
         }    
       } catch (err) {
         console.error(err);

@@ -21,7 +21,7 @@ const createTasksTable = async () => {
       const sqlQuery = `
         CREATE TABLE tasks (
           id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-          title VARCHAR(255) NOT NULL, 
+          title VARCHAR(512) NOT NULL, 
           description TEXT, 
           completed BOOLEAN NOT NULL DEFAULT false
         );
