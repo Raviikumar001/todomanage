@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState, useRef} from 'react'
+import React,{useState} from 'react'
 import  ArrowLeft from './svgFiles';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
