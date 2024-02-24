@@ -18,16 +18,17 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
   async function delteTask(id:number){
 
    try {
-    const respone = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/delete-task?id=${id}`);
+    const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/delete-task?id=${id}`);
 
-    console.log(respone);
-    if(respone){
+    console.log(response);
+    if(response.data){
       dispatch(deleteTask(id));
-      toast.success(respone.data.message);
+      console.log(response.data.message)
+      toast.success(response.data.message);
     }
    } catch (error:unknown) {
     const err = error as AxiosError<string>;
-    if(err)
+    if(err.response?.data)
     {
       toast.success(err.response?.data);
     }
@@ -61,7 +62,7 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
   }
   
   return (
-    <div className='pl-6'>
+    <div className='pl-6 md:w-[100%]'>
       <ToastContainer />
         {tasks.map((task)=> (
           <>

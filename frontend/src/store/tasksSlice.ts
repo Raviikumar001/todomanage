@@ -25,6 +25,7 @@ const tasksSlice = createSlice({
       state.error = null;
       state.message = null;
     },
+
     fetchTasksSuccess(state, action: { payload: Task[] }) {
 
       state.tasks = action.payload.reverse(); 
@@ -36,10 +37,14 @@ const tasksSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false; 
     }, 
+    setMessage(state, action: {payload:string}){
+      state.message = action.payload
+    },
 
     createTask(state){
       state.isLoading = true;
       state.error = null;
+      state.message = null;
     },
     createTaskSuccess(state, action:{payload: string}){
       state.isLoading = false;
@@ -76,8 +81,10 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { fetchTasksStart, fetchTasksSuccess, fetchTasksFailure , createTask, createTaskFailure, createTaskSuccess,updateTaskCompletion,
+export const { fetchTasksStart, fetchTasksSuccess, fetchTasksFailure ,
+  setMessage,
+  createTask, createTaskFailure, createTaskSuccess,updateTaskCompletion,
   
   deleteTask
-  /* ... other actions */  } = tasksSlice.actions;
+  } = tasksSlice.actions;
 export default tasksSlice.reducer;  

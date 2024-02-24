@@ -31,6 +31,15 @@
   bottom: 16px;   /* Adjust for desired margin from the bottom */
   right: 20px;    /* Adjust for desired margin from the right */
 }
+@media screen and (min-width: 600px) {
+  .sticky-bottom {
+    position: fixed;
+    bottom: 16px;   /* Adjust for desired margin from the bottom */
+    right: 195px;    /* Adjust for desired margin from the right */
+  }
+}
+
+
 /* 
 a {
   font-weight: 500;

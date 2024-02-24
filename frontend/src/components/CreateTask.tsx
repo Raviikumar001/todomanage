@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import axios, { AxiosError } from "axios";
-import { createTask,createTaskSuccess, createTaskFailure } from '../store/tasksSlice';
+import { createTask,createTaskSuccess, createTaskFailure ,setMessage} from '../store/tasksSlice';
 import LoadingComponent from './LoadingCompoent';
 import MessageComponent from './MessagInfo';
 
@@ -14,7 +14,7 @@ const CreateTask:React.FC = () => {
     const [title, SetTitle] = useState('');
     const [description, setDescription] = useState('');
     const dispatch = useDispatch();
-    const {error,isLoading, message} = useSelector((state: RootState) => state.tasks); 
+    const {error,isLoading, message,} = useSelector((state: RootState) => state.tasks); 
     
     let navigate = useNavigate();
 
@@ -22,6 +22,12 @@ const CreateTask:React.FC = () => {
         e.preventDefault();
 
         try {
+
+            if((title && description)=== ''){
+                dispatch(setMessage("Fields should not be empty!"))
+                return;
+            }
+
             dispatch(createTask())
 
             const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/create-task`, 
@@ -52,7 +58,9 @@ const CreateTask:React.FC = () => {
     }
   return (
         <>
-            <div className='bg-white h-screen text-black w-[100%]'>
+            <div className='bg-white h-screen text-black w-[100%] '>
+                <div className='md:grid md:grid-cols-1 md:justify-center md:mr-[25%] md:ml-[25%] md:pt-5'>
+
                 <div className='flex justify-between p-2 pt-5'>
                   <Link to="/app"><ArrowLeft />  </Link>  
                     <h2> Create a New Task</h2>
@@ -90,6 +98,9 @@ const CreateTask:React.FC = () => {
                     </form>
 
                 </div>
+
+                </div>
+
 
             </div>
         </>
