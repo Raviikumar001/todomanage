@@ -7,11 +7,10 @@ import CreateTaskButton from "../components/createTaskButton";
 import TaskPlaceholder from "../components/TaskPlaceholder";
 import TaskList from "../components/TaskList";
 
-
 const MainApp: React.FC = () => {
   const isFirstRender = useRef(true);
   const dispatch = useDispatch();
-  const {tasks, isLoading} = useSelector((state: RootState) => state.tasks); 
+  const {tasks, isLoading, totalTasks} = useSelector((state: RootState) => state.tasks); 
   const fetchTasks = async () => {
     dispatch(fetchTasksStart());
     try {
@@ -36,12 +35,12 @@ const MainApp: React.FC = () => {
 
   return (
     <div className=" ">
-      <div className="bg-[#B5C0D0] m-5  border border-white  rounded-md">
+      <div className="bg-[#265073] m-5  border border-white  rounded-md">
         <div className="p-6 flex justify-around items-center">
           <img src="/clipboard.png" alt="task" height={50} width={50} />
           <div>
             <p className="">Total Tasks</p>
-            <p>9</p>
+            <p>{totalTasks}</p>
           </div>
         </div>
       </div>

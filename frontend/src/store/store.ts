@@ -12,6 +12,8 @@ export interface TasksState {
   tasks: Task[];
   isLoading: boolean;
   error: string | null;
+  message:null | string;
+  totalTasks:null| number;
 }
 
 export const store = configureStore({

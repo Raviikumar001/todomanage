@@ -1,24 +1,49 @@
 
 import React from 'react'
 import { Task } from '../store/store';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios, { AxiosError } from "axios";
 type TaskProps ={
   tasks: Task[]
 }
 
 const TaskList:React.FC <TaskProps>= ({tasks}) => {
   console.log(tasks)
+
+
+  async function delteTask(id:number){
+
+   try {
+    const respone = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/delete-task?id=${id}`);
+
+    console.log(respone);
+    if(respone){
+      toast.success(respone.data.message);
+    }
+   } catch (error:unknown) {
+    const err = error as AxiosError<string>;
+    if(err)
+    {
+      toast.success(err.response?.data);
+    }
+   }
+  }
+ 
+  
   return (
     <div className='pl-6'>
+      <ToastContainer />
         {tasks.map((task)=> (
           <>
-          <div key={task.id} className='p-2 bg-[#333A73] border m-2 rounded-md '>
+          <div key={task.id} className='p-4 bg-[#333A73] border m-2 rounded-md flex justify-between mb-5 '>
             <div className='' >
 
             <p className='font-medium'>{task.title}</p>
             <p className='text-sm'>{task.description}</p>
             <div className='mt-3'>
               <button className='border border-gray-500 p-1 rounded-lg bg-[#50C4ED]'>Completed</button>
-              <button className='p-1 ml-3 border-gray-500 rounded-lg bg-[#535C91]'>Delete</button>
+              <button onClick={()=>delteTask(task.id)} className='p-1 ml-3 border-gray-500 rounded-lg bg-[#535C91]'>Delete</button>
             </div>
 
             </div>
