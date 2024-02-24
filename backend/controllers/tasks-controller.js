@@ -6,13 +6,14 @@ const GetAllTasks = async (req, res) => {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM tasks'); 
       const tasks = result.rows; 
-      res.json(tasks); 
+      res.status(200).json(tasks); 
       client.release();
     } catch (err) {
       console.error(err);
       res.status(500).send('Error retrieving tasks');
     }
   };
+
 const AddNewTask = async (req, res) => {
 
 
@@ -58,7 +59,7 @@ const UpdateTask = async (req, res) => {
       }
   
       const updatedTask = result.rows[0];
-      res.json(updatedTask);
+      res.status(200).json(updatedTask);
       client.release();
     } catch (err) {
       console.error(err);

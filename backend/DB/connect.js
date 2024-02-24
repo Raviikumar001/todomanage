@@ -1,19 +1,10 @@
 const Pool= require('pg').Pool;
 require('dotenv').config();
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
-console.log(PGHOST, PGDATABASE)
+const connectionString = process.env.DB_URL;
 const pool = new Pool({
-    host: PGHOST,
-    database: PGDATABASE,
-    username: PGUSER,
-    password: PGPASSWORD,
-    port: 5432,
-    ssl: {
-      require: true,
-    },
-  });
-
+  connectionString,
+});
 
 const createTasksTable = async () => {
     try {
