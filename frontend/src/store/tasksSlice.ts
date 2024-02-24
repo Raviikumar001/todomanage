@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TasksState , Task} from './store';
 
 const initialState: TasksState = {
@@ -8,6 +8,12 @@ const initialState: TasksState = {
   message:null,
   totalTasks:null
 };
+
+export type updatePayload = {
+  id: number,
+  status:boolean
+}
+
 
 const tasksSlice = createSlice({
   
@@ -44,13 +50,34 @@ const tasksSlice = createSlice({
     createTaskFailure(state,action: {payload:string}){
       state.error = action.payload;
       state.isLoading= false;
-    }
+    },
 
+    deleteTask(state, action: {payload:number}) { 
+      const existingIndex = state.tasks.findIndex(task => task.id === action.payload);
 
+      if (existingIndex !== -1) {
+          state.tasks.splice(existingIndex, 1); 
+          if(state.totalTasks)
+          state.totalTasks = state.totalTasks - 1;
+
+     
+      }  
+  },
+
+  updateTaskCompletion(state, action: PayloadAction<updatePayload>) {
+    const taskToUpdate = state.tasks.find(task => task.id === action.payload.id);
+
+    if (taskToUpdate) {
+        taskToUpdate.completed = action.payload.status; 
+    } 
+}
  
 
   },
 });
 
-export const { fetchTasksStart, fetchTasksSuccess, fetchTasksFailure , createTask, createTaskFailure, createTaskSuccess/* ... other actions */  } = tasksSlice.actions;
+export const { fetchTasksStart, fetchTasksSuccess, fetchTasksFailure , createTask, createTaskFailure, createTaskSuccess,updateTaskCompletion,
+  
+  deleteTask
+  /* ... other actions */  } = tasksSlice.actions;
 export default tasksSlice.reducer;  
