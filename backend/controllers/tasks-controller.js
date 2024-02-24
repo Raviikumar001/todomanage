@@ -19,7 +19,7 @@ const AddNewTask = async (req, res) => {
 
     try {
         const { title, description } = req.body; 
-    
+        
         const client = await pool.connect(); // Get a client connection
         try { // Add a nested try/finally to release the client
             const result = await client.query(
@@ -27,14 +27,14 @@ const AddNewTask = async (req, res) => {
                 [title, description, false] // Default completed status is false
               );
               const newTask = result.rows[0];
-              res.status(201).json(newTask);
-  
+              res.status(200).json({Task:newTask, message:"Task Created Successfully"});
+                
         } finally {
           client.release(); // Release the client back to the pool
         }    
       } catch (err) {
         console.error(err);
-        res.status(500).send('Error creating task');
+        res.status(500).send('Error creating task. Try Again!');
       }
 
 
@@ -59,7 +59,8 @@ const UpdateTask = async (req, res) => {
       }
   
       const updatedTask = result.rows[0];
-      res.status(200).json(updatedTask);
+      res.status(200).json({Task:updatedTask, message:"Task Updated Successfully"});
+    
       client.release();
     } catch (err) {
       console.error(err);
@@ -70,7 +71,7 @@ const UpdateTask = async (req, res) => {
   const DeleteTask = async (req, res) => {
     try {
       const { id } = req.query; 
-  
+     
       const client = await pool.connect();
       const result = await client.query(
         'DELETE FROM tasks WHERE id = $1',
@@ -81,7 +82,7 @@ const UpdateTask = async (req, res) => {
         return res.status(404).send('Task not found');
       }
       
-      res.status(204).json({message: "Task Deleted Successfully"}); 
+      res.status(200).json({message:"Task Deleted Successfully"});
       client.release();
     } catch (err) {
       console.error(err);
