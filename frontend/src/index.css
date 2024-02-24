@@ -28,14 +28,14 @@
 
 .sticky-bottom {
   position: fixed;
-  bottom: 16px;   /* Adjust for desired margin from the bottom */
-  right: 20px;    /* Adjust for desired margin from the right */
+  bottom: 16px;   
+  right: 20px;    
 }
 @media screen and (min-width: 600px) {
   .sticky-bottom {
     position: fixed;
-    bottom: 16px;   /* Adjust for desired margin from the bottom */
-    right: 195px;    /* Adjust for desired margin from the right */
+    bottom: 16px;   
+    right: 195px;   
   }
 }
 
