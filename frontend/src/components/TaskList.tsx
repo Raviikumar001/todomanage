@@ -72,7 +72,7 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
             <div className='' >
 
             <p className='font-medium'>{task.title}</p>
-            <p className='text-sm'>{task.description}</p>
+            <p className='text-sm white-space-pre-wrap' >{task.description}</p>
             <div className='mt-3'>
               <button onClick={()=> onCompleteTask(task.id,task.completed)} className='border border-gray-500 p-1 rounded-lg bg-[#50C4ED]'>Completed</button>
               <button onClick={()=>delteTask(task.id)} className='p-1 ml-3 border-gray-500 rounded-lg bg-[#535C91]'>Delete</button>
