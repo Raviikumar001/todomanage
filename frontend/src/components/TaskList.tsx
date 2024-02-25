@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { Task } from '../store/store';
-import toast, { Toaster } from 'react-hot-toast';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios, { AxiosError } from "axios";
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTaskCompletion } from '../store/tasksSlice';
@@ -19,7 +19,7 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
 
    try {
     const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/v1/api/delete-task?id=${id}`);
-    
+
 
     if(response.data){
       dispatch(deleteTask(id));
@@ -30,13 +30,11 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
     const err = error as AxiosError<string>;
     if(err.response?.data)
     {
-      toast.error(err.response?.data);
+      toast.success(err.response?.data);
     }
    }
   }
   
-
-
 
   async function onCompleteTask(id:number, status:boolean)
   {
@@ -53,23 +51,19 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
     };
       dispatch(updateTaskCompletion(payload));
       toast.success(respone.data.message);
- 
     }
       }  catch (error:unknown) {
         const err = error as AxiosError<string>;
-    if(err.response?.data)
-    {
-      toast.error(err.response?.data);
-    }
+        if(err)
+        {
+          toast.success(err.response?.data);
+        }
        }
   }
   
   return (
     <div className='pl-6 md:w-[100%]'>
-       <Toaster
-        position="top-right"
-        reverseOrder={false}
-       />
+      <ToastContainer />
         {tasks.map((task)=> (
           <>
           <div key={task.id} className='p-4 bg-[#333A73] border m-2 rounded-md flex justify-between mb-5 '>
