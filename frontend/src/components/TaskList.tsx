@@ -1,8 +1,7 @@
 
 import React from 'react'
 import { Task } from '../store/store';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
 import axios, { AxiosError } from "axios";
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTaskCompletion } from '../store/tasksSlice';
@@ -30,7 +29,7 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
     const err = error as AxiosError<string>;
     if(err.response?.data)
     {
-      toast.success(err.response?.data);
+      toast.error(err.response?.data);
     }
    }
   }
@@ -54,16 +53,19 @@ const TaskList:React.FC <TaskProps>= ({tasks}) => {
     }
       }  catch (error:unknown) {
         const err = error as AxiosError<string>;
-        if(err)
-        {
-          toast.success(err.response?.data);
-        }
+    if(err.response?.data)
+    {
+      toast.error(err.response?.data);
+    }
        }
   }
   
   return (
     <div className='pl-6 md:w-[100%]'>
-      <ToastContainer />
+     <Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
         {tasks.map((task)=> (
           <>
           <div key={task.id} className='p-4 bg-[#333A73] border m-2 rounded-md flex justify-between mb-5 '>

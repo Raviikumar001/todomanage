@@ -7,7 +7,7 @@ import CreateTaskButton from "../components/createTaskButton";
 import TaskPlaceholder from "../components/TaskPlaceholder";
 import TaskList from "../components/TaskList";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 const MainApp: React.FC = () => {
   const isFirstRender = useRef(true);
   const dispatch = useDispatch();
@@ -54,7 +54,10 @@ const MainApp: React.FC = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
       <p className="p-6">Tasks</p>
       <CreateTaskButton />
       {
