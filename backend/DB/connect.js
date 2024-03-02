@@ -1,10 +1,18 @@
 const Pool= require('pg').Pool;
+const retry = require('retry');
 require('dotenv').config();
 
 const connectionString = process.env.DB_URL;
 const pool = new Pool({
   connectionString,
 });
+
+
+
+
+
+
+
 
 const createTasksTable = async () => {
     try {
@@ -33,27 +41,40 @@ const createTasksTable = async () => {
     }
   };
 
-
+  const connectDB = () => {
+    const operation = retry.operation({
+      retries: 5,
+      minTimeout: 4000,
+      randomize: true,
+    });
+  
+    operation.attempt(async (currentAttempt) => {
+      try {
+        const client = await pool.connect();
+  
+        try {
+          console.log('Connected to the database');
+          const result = await client.query('SELECT version()');
+          console.log(result.rows[0]);
+          await createTasksTable(); 
+        } finally {
+          client.release();
+        }
+  
+      } catch (err) {
+        if (operation.retry(err)) {
+          console.warn(`Failed to connect on attempt ${currentAttempt}, retrying...`);
+        } else {
+          console.error('Failed to connect to the database after multiple attempts:', err);
+        }
+      }
+    });
+  };
 
 
 
   
-  const connectDB = () => {
-      
-      async function getPgVersion() {
-        const client = await pool.connect();
-        try {
-            
-          const result = await client.query('SELECT version()');
-          console.log(result.rows[0]);
-          createTasksTable(); 
-        } finally {
-          client.release();
-        }
-      }
-      getPgVersion();
 
-}
 
 module.exports =  {connectDB, pool}; 
 
